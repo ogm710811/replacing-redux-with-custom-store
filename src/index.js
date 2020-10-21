@@ -4,19 +4,13 @@ import { BrowserRouter } from "react-router-dom";
 
 import "./index.css";
 import App from "./App";
-import ProductsProvider from "./context/products-context";
+import configureProductStore from "./custom-store/product-store";
 
-// const rootReducer = combineReducers({
-//   shop: productReducer,
-// });
-
-// const store = createStore(rootReducer);
-
+// calling the store we want to use.
+configureProductStore();
 ReactDOM.render(
-  <ProductsProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </ProductsProvider>,
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
   document.getElementById("root")
 );

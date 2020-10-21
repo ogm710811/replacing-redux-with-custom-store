@@ -1,13 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import Card from "../UI/Card";
 import "./ProductItem.css";
-import { ProductsContext } from "../../context/products-context";
+import { useStore } from "../../custom-store/store";
 
-const ProductItem = (props) => {
-  const toggleFavorite = useContext(ProductsContext).toggleFavorite;
+const ProductItem = React.memo( (props) => {
+  console.log("RENDERING ProductItem");
+  // what causes this component rendering multiple times is the useStore() hook.
+  // since this component only use dispatch and it doesn't listen to changes in state
+  // we can control it passing a value to useStore that tell it when to listen to
+  // state changes.
+  const dispatch = useStore(false)[1];
   const toggleFavHandler = () => {
-    toggleFavorite(props.id);
+    dispatch("TOGGLE_FAVORITE", { productId: props.id });
   };
 
   return (
@@ -24,6 +29,6 @@ const ProductItem = (props) => {
       </div>
     </Card>
   );
-};
+});
 
 export default ProductItem;
